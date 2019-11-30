@@ -10,7 +10,7 @@
   "paths": {
     "/contacts": {
       "get": {
-        "tags": ["Contacts GET"],
+        "tags": ["Contacts"],
         "summary": "Retrieves all contacts.",
         "responses": {
           "200": { "description": "OK", "schema": { "$ref": "#/definitions/Contacts" } },
@@ -19,11 +19,30 @@
         },
         "content": { "application/json": {} },
         "parameters": []
+      },
+      "post": {
+        "tags": ["Contacts"],
+        "summary": "Creates contact.",
+        "responses": {
+          "200": { "description": "OK", "schema": { "$ref": "#/definitions/Contact" } },
+          "400": { "description": "Bad request", "schema": { "$ref": "#/definitions/Error" } },
+          "500": { "description": "Internal server error", "schema": { "$ref": "#/definitions/Error" } }
+        },
+        "content": { "application/json": {} },
+        "parameters": [
+          {
+            "name": "contact",
+            "in": "body",
+            "required": true,
+            "description": "Contact to add to the store",
+            "schema": { "$ref": "#/definitions/Contact" }
+          }
+        ]
       }
     },
     "/contacts/{contactID}": {
       "get": {
-        "tags": ["Contacts GET"],
+        "tags": ["Contacts"],
         "summary": "Retrieves requested contact.",
         "responses": {
           "200": { "description": "OK", "schema": { "$ref": "#/definitions/Contact" } },
@@ -36,7 +55,7 @@
             "name": "contactID",
             "in": "path",
             "required": true,
-            "description": "The id of the contact to retrieve",
+            "description": "ID of contact to fetch",
             "type": "string"
           }
         ]

@@ -1,9 +1,14 @@
-import { getContacts, getContact } from './providers/ContactsProvider'
+import { Contact } from '../../models/Contact'
+import { getContacts, getContact, postContact } from './providers/ContactsProvider'
 
-export const getContactsByName = async () => {
+export const retrieveContacts = async () => {
   return await getContacts()
 }
 
-export const getContactByName = async (contactID: string) => {
+export const retrieveContact = async (contactID: string) => {
   return await getContact(contactID)
+}
+
+export const createContact = async (contact: Contact) => {
+  return await postContact(contact)
 }
