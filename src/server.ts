@@ -5,7 +5,6 @@ import middleware from './middleware'
 import errorHandlers from './middleware/errorHandlers'
 import routes from './services'
 import { applyMiddleware, applyRoutes } from './utils'
-import { createDatabase } from './utils/GenerateDatabase'
 
 const router = express()
 const { PORT = 3000 } = process.env
@@ -28,37 +27,11 @@ process.on('unhandledRejection', error => {
   process.exit(1)
 })
 
-// Create Data ====================================================================================================== //
-
-/**
- * Waits for data to be created.
- */
-const setupDatabase = async () => {
-  await createDatabase()
-  console.log('[Init] - Data creation complete.')
-  setupExpress()
-}
-
 // Setup Express ==================================================================================================== //
 
-/**
- * Apply middleware, routes, error handlers then start server.
- */
-const setupExpress = () => {
-  applyMiddleware(middleware, router)
-  applyRoutes(routes, router)
-  applyMiddleware(errorHandlers, router)
-  setupServer()
-}
+applyMiddleware(middleware, router)
+applyRoutes(routes, router)
+applyMiddleware(errorHandlers, router)
 
-// Setup Server ===================================================================================================== //
-
-/**
- * Start the http server on the set port.
- */
-const setupServer = () => {
-  const server = http.createServer(router)
-  server.listen(PORT, () => console.log(`[Init] - Server is running http://localhost:${PORT}...`))
-}
-
-setupDatabase()
+const server = http.createServer(router)
+server.listen(PORT, () => console.log(`[API] - Server is running http://localhost:${PORT}...`))

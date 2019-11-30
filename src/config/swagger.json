@@ -10,24 +10,61 @@
   "paths": {
     "/contacts": {
       "get": {
-        "tags": ["Contacts"],
-        "summary": "Retrieves all 100 contacts.",
+        "tags": ["Contacts GET"],
+        "summary": "Retrieves all contacts.",
         "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "400": {
-            "description": "Bad request"
-          },
-          "500": {
-            "description": "Internal server error"
-          }
+          "200": { "description": "OK", "schema": { "$ref": "#/definitions/Contacts" } },
+          "400": { "description": "Bad request", "schema": { "$ref": "#/definitions/Error" } },
+          "500": { "description": "Internal server error", "schema": { "$ref": "#/definitions/Error" } }
         },
-        "content": {
-          "application/json": {}
-        },
+        "content": { "application/json": {} },
         "parameters": []
       }
+    },
+    "/contacts/{contactID}": {
+      "get": {
+        "tags": ["Contacts GET"],
+        "summary": "Retrieves requested contact.",
+        "responses": {
+          "200": { "description": "OK", "schema": { "$ref": "#/definitions/Contact" } },
+          "400": { "description": "Bad request", "schema": { "$ref": "#/definitions/Error" } },
+          "500": { "description": "Internal server error", "schema": { "$ref": "#/definitions/Error" } }
+        },
+        "content": { "application/json": {} },
+        "parameters": [
+          {
+            "name": "contactID",
+            "in": "path",
+            "required": true,
+            "description": "The id of the contact to retrieve",
+            "type": "string"
+          }
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "Contact": {
+      "required": ["id", "username"],
+      "properties": {
+        "id": { "type": "string" },
+        "username": { "type": "string" },
+        "firstName": { "type": "string" },
+        "lastName": { "type": "string" },
+        "email": { "type": "string" },
+        "address": { "type": "string" },
+        "county": { "type": "string" },
+        "country": { "type": "string" },
+        "postcode": { "type": "string" }
+      }
+    },
+    "Contacts": {
+      "type": "array",
+      "items": { "$ref": "#/definitions/Contact" }
+    },
+    "Error": {
+      "required": ["code", "message"],
+      "properties": { "code": { "type": "integer", "format": "int32" }, "message": { "type": "string" } }
     }
   }
 }

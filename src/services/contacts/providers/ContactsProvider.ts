@@ -1,17 +1,21 @@
-import fs from 'fs'
-import path from 'path'
+import request from 'request-promise'
 
-import { Contact } from '../../../models/Contact.js'
+import { Contact } from '../../../models/Contact'
 
 /**
- * Returns all existing contacts.
+ * Returns all contacts.
  */
-export const getContacts = async (): Promise<any[]> => {
-  return new Promise(resolve => {
-    const filepath = path.join(__dirname, '../../../utils/Contacts.json')
-    fs.readFile(filepath, 'utf8', (error, data) => {
-      const result: Contact[] = JSON.parse(data)
-      resolve(result)
-    })
-  })
+export const getContacts = async (): Promise<Contact[]> => {
+  const url = `http://localhost:3001/contacts`
+  const response = await request(url)
+  return JSON.parse(response)
+}
+
+/**
+ * Returns contact.
+ */
+export const getContact = async (contactID: string): Promise<Contact> => {
+  const url = `http://localhost:3001/contacts/${contactID}`
+  const response = await request(url)
+  return JSON.parse(response)
 }
