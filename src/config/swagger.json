@@ -34,7 +34,7 @@
             "name": "contact",
             "in": "body",
             "required": true,
-            "description": "Contact to add to the store",
+            "description": "Contact to add to the store.",
             "schema": { "$ref": "#/definitions/Contact" }
           }
         ]
@@ -43,7 +43,7 @@
     "/contacts/{contactID}": {
       "get": {
         "tags": ["Contacts"],
-        "summary": "Retrieves requested contact.",
+        "summary": "Retrieves contact.",
         "responses": {
           "200": { "description": "OK", "schema": { "$ref": "#/definitions/Contact" } },
           "400": { "description": "Bad request", "schema": { "$ref": "#/definitions/Error" } },
@@ -55,8 +55,34 @@
             "name": "contactID",
             "in": "path",
             "required": true,
-            "description": "ID of contact to fetch",
+            "description": "ID of contact to fetch.",
             "type": "string"
+          }
+        ]
+      },
+      "patch": {
+        "tags": ["Contacts"],
+        "summary": "Updates contact.",
+        "responses": {
+          "200": { "description": "OK", "schema": { "$ref": "#/definitions/Contact" } },
+          "400": { "description": "Bad request", "schema": { "$ref": "#/definitions/Error" } },
+          "500": { "description": "Internal server error", "schema": { "$ref": "#/definitions/Error" } }
+        },
+        "content": { "application/json": {} },
+        "parameters": [
+          {
+            "name": "contactID",
+            "in": "path",
+            "required": true,
+            "description": "ID of contact to update.",
+            "type": "string"
+          },
+          {
+            "name": "changes",
+            "in": "body",
+            "required": true,
+            "description": "Changes to update the contact with.",
+            "schema": { "$ref": "#/definitions/ContactUpdate" }
           }
         ]
       }
@@ -64,9 +90,23 @@
   },
   "definitions": {
     "Contact": {
+      "type": "object",
       "required": ["id", "username"],
       "properties": {
         "id": { "type": "string" },
+        "username": { "type": "string" },
+        "firstName": { "type": "string" },
+        "lastName": { "type": "string" },
+        "email": { "type": "string" },
+        "address": { "type": "string" },
+        "county": { "type": "string" },
+        "country": { "type": "string" },
+        "postcode": { "type": "string" }
+      }
+    },
+    "ContactUpdate": {
+      "type": "object",
+      "properties": {
         "username": { "type": "string" },
         "firstName": { "type": "string" },
         "lastName": { "type": "string" },
@@ -82,6 +122,7 @@
       "items": { "$ref": "#/definitions/Contact" }
     },
     "Error": {
+      "type": "object",
       "required": ["code", "message"],
       "properties": { "code": { "type": "integer", "format": "int32" }, "message": { "type": "string" } }
     }
