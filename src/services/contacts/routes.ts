@@ -1,7 +1,7 @@
 import { Request, Response } from 'express'
 
 import { Contact } from '../../models/Contact'
-import { fetchContacts, fetchContact, createContact, editContact } from './ContactsControl'
+import { fetchContacts, fetchContact, createContact, editContact, destroyContact } from './ContactsControl'
 
 export default [
   {
@@ -32,7 +32,7 @@ export default [
       async (req: Request, res: Response) => {
         const newContact: Contact = req.body
         const contact = await createContact(newContact)
-        res.status(200).send(contact)
+        res.status(201).send(contact)
       }
     ]
   },
@@ -45,6 +45,17 @@ export default [
         const changes: Partial<Contact> = req.body
         const contact = await editContact(contactID, changes)
         res.status(200).send(contact)
+      }
+    ]
+  },
+  {
+    path: '/api/v1.0/contacts/:contactID',
+    method: 'delete',
+    handler: [
+      async (req: Request, res: Response) => {
+        const contactID: string = req.params.contactID
+        await destroyContact(contactID)
+        res.status(204).send()
       }
     ]
   }

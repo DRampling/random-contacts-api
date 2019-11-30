@@ -53,3 +53,16 @@ export const patchContact = async (contactID: string, changes: Partial<Contact>)
   const response = await request(options)
   return response
 }
+
+/**
+ * Deletes contact.
+ * * DELETE /contacts/:contactID
+ */
+export const deleteContact = async (contactID: string): Promise<void> => {
+  const options = {
+    uri: `http://localhost:3001/contacts/${contactID}`,
+    method: 'DELETE'
+  }
+  await request(options)
+  return
+}
