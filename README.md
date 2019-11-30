@@ -14,11 +14,19 @@ RESTful API to provide random contacts with crud features.
 
 ## Installation
 
-1. `npm install`
+1. Install dependencies: `npm install`
 
-2. `npm run dev`
+2. Run in development environment: `npm run dev`
 
 ## Docs
 
 - [API documentation & call testing](http://localhost:3000/api-docs)
 - [Issue Tracker](https://github.com/DRampling/random-contacts-api/issues)
+
+## Development Roadmap
+
+- Expand `/contacts` routes for full crud functionality.
+- Unit testing with Jest.
+- Add integration tests & research ideal library (supertest?).
+- Add production config.
+- Add clustering and restarting with pm2.

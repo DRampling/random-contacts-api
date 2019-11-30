@@ -2,8 +2,6 @@ import faker from 'faker'
 
 import { Contact } from '../models/Contact'
 
-// Public =========================================================================================================== //
-
 /**
  * Returns n random contacts.
  * @param target Number of desired random contacts.
