@@ -16,7 +16,7 @@ RESTful API to provide random contacts with crud features.
 
 1. Install dependencies: `npm install`
 
-2. Run in development environment: `npm run dev`
+2. Run in development environment: `npm start`
 
 ## Docs
 
